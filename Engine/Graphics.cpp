@@ -336,6 +336,23 @@ void Graphics::DrawRect( int x0,int y0,int x1,int y1,Color c )
 	}
 }
 
+void Graphics::DrawCircle(int x, int y, int radius, Color c)
+{
+	const int x_center = x + radius;
+	const int y_center = y + radius;
+	const int radiusSquared = pow(radius, 2);
+	for (int i = -radius; i < radius; i++)
+	{
+		for (int j = -radius; j < radius; j++)
+		{
+			if (pow(i, 2) + pow(j, 2) <= radiusSquared)
+			{
+				PutPixel(i + x_center, j + y_center, c);
+			}
+		}
+	}
+}
+
 //////////////////////////////////////////////////
 //           Graphics Exception
 Graphics::Exception::Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line )
