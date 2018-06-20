@@ -338,16 +338,15 @@ void Graphics::DrawRect( int x0,int y0,int x1,int y1,Color c )
 
 void Graphics::DrawCircle(int x, int y, int radius, Color c)
 {
-	const int x_center = x + radius;
-	const int y_center = y + radius;
-	const int radiusSquared = pow(radius, 2);
-	for (int i = -radius; i < radius; i++)
+	const int radius_sqr = radius * radius;
+
+	for (int i = x - radius; i < x + radius; i++)
 	{
-		for (int j = -radius; j < radius; j++)
+		for (int j = y - radius; j < y + radius; j++)
 		{
-			if (pow(i, 2) + pow(j, 2) <= radiusSquared)
+			if (pow(x - i, 2) + pow(y - j, 2) <= radius_sqr)
 			{
-				PutPixel(i + x_center, j + y_center, c);
+				PutPixel(i, j, c);
 			}
 		}
 	}
