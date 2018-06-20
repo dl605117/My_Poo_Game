@@ -57,6 +57,7 @@ private:
 	Dude dude;
 	Goal goal;
 	Meter meter;
+	FrameTimer ft;
 	static constexpr int nPoo = 10;
 	Poo poos[nPoo];
 	bool isStarted = false;

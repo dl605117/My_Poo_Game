@@ -22,17 +22,18 @@
 #include "Game.h"
 #include <random>
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd ),
-	rng( rd() ),
-	xDist( 0,770 ),
-	yDist( 0,570 ),
-	goal( xDist( rng ),yDist( rng ) ),
-	meter( 20,20 )
+	wnd(wnd),
+	gfx(wnd),
+	rng(rd()),
+	xDist(0, 770),
+	yDist(0, 570),
+	goal(xDist(rng), yDist(rng)),
+	meter(20, 20),
+	ft()
 {
-	std::uniform_real_distribution<float> vDist( -2.0f,2.0f );
+	std::uniform_real_distribution<float> vDist( -2.0f  * 60,2.0f * 60 );
 	for( int i = 0; i < nPoo; ++i )
 	{
 		poos[i].Init( xDist( rng ),yDist( rng ),vDist( rng ),vDist( rng ) );
@@ -50,15 +51,16 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	float dt = ft.Mark();
 	goal.UpdateColor();
 	if( isStarted && !isGameOver )
 	{
-		dude.Update( wnd.kbd );
+		dude.Update( wnd.kbd, dt );
 		dude.ClampToScreen();
 
 		for( int i = 0; i < nPoo; ++i )
 		{
-			poos[i].Update();
+			poos[i].Update(dt);
 			if( poos[i].TestCollision( dude ) )
 			{
 				isGameOver = true;
@@ -28448,5 +28450,4 @@ void Game::ComposeFrame()
 		}
 		meter.Draw( gfx );
 	}
-	gfx.DrawCircle(200, 200, 100, Colors::Blue);
 }
