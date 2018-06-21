@@ -39,12 +39,12 @@ Vec2& Vec2::operator-=(const Vec2& rhs)
 
 float Vec2::GetLength() const
 {
-	return x * x + y * y;
+	return std::sqrt(GetLengthSq());
 }
 
 float Vec2::GetLengthSq() const
 {
-	return std::sqrt(GetLength());
+	return x * x + y * y;
 }
 
 Vec2 & Vec2::Normalize()
@@ -56,7 +56,7 @@ Vec2 Vec2::GetNormalized() const
 {
 	const float length = GetLength();
 	if (length != 0.0f)
-		return *this * (1 / length);
+		return *this * (1.0f / length);
 	return *this;
 }
 
